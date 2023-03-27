@@ -21,7 +21,8 @@ public class Main {
 			System.out.println("User Password: " + user.getPassword());
 			System.out.println("----------------------------------");
 		}
-
+		
+		boolean credentials = false;
 		do {
 
 			System.out.print("Enter email: ");
@@ -29,11 +30,12 @@ public class Main {
 			System.out.print("Enter password: ");
 			String password = scan.next();
 			System.out.println();
-
+			
 			for (User user : RepoGenerator.users) {
 				if (!user.checkCredentials(email, password)) {
 					continue;
 				} else {
+					credentials = true;
 					System.out.println("Welcome " + user.getName());
 
 					do {
@@ -45,6 +47,7 @@ public class Main {
 						System.out.println("5. Add album to your basket");
 						System.out.println("6. Remove album from your basket");
 						System.out.println("7. Buy the itmes in your basket");
+						System.out.println("*** -1 to exit ***");
 
 						isValidNumber();
 						choice = scan.nextInt();
@@ -98,7 +101,6 @@ public class Main {
 						default -> {
 							if (choice == -1) {
 								System.out.println("Bye Bye " + user.getName());
-								System.out.println("To continue with another user, please provide");
 							} else {
 								System.out.println("Enter a valid choice or -1 to exit");
 							}
@@ -107,7 +109,8 @@ public class Main {
 					} while (choice != -1);
 				}
 			}
-		} while (true);
+			
+		} while (terminateProgram(credentials));
 	}
 
 	static void isValidNumber() {
@@ -116,5 +119,23 @@ public class Main {
 			scan.nextLine();
 			System.out.print("Please enter a valid number: ");
 		}
+	}
+	
+	static boolean terminateProgram(boolean credentials) {
+		if(!credentials) {
+			System.out.println("No such user or wrong password!");
+			System.out.println("*******************************");
+		}
+		
+		System.out.println("Do you want to terminate the progam? "
+				+ "\nY to terminate, N to continue with another user.");
+        String terminate = scan.next();
+
+        if(terminate.equals("Y") || terminate.equals("y") ){
+        	System.out.println("Bye Bye!");
+            return false;
+        }else{
+            return true;
+        }
 	}
 }

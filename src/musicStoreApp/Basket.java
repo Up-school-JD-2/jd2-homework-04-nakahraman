@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class Basket {
-	
+
 	private UUID id;
 	private List<Album> albums;
 	private double totalPrice;
 	private int totalItems;
-	
 
 	public Basket() {
 		this.id = UUID.randomUUID();
@@ -22,7 +21,7 @@ public class Basket {
 	public UUID getId() {
 		return id;
 	}
-	
+
 	public List<Album> getAlbums() {
 		return albums;
 	}
@@ -30,21 +29,34 @@ public class Basket {
 	public void setAlbums(List<Album> albums) {
 		this.albums = albums;
 	}
-	
+
 	public void addAlbum(Album album) {
 		albums.add(album);
 	}
-	
+
 	public void removeAlbum(Album album) {
-		albums.remove(album);
+
+		System.out.println("-----------------------------------------------------------------------------");
+		if (albums.contains(album)) {
+			albums.remove(album);
+			System.out.println("The album with ID: " + album.getAlbumID() + " and Title: \"" + album.getTitle()
+					+ "\" has been deleted from your basket!");
+
+		} else {
+			System.out.println("The album with ID: " + album.getAlbumID() + " and Title: \"" + album.getTitle()
+					+ "\" is not in your basket already!");
+		}
+		System.out.println("-----------------------------------------------------------------------------");
+
 	}
-	
+
 	public void printBasketInfo() {
+
 		totalPrice = 0.0;
 		totalItems = 0;
-		
-		for(Album album : albums) {
-		
+
+		for (Album album : albums) {
+
 			totalPrice += album.getPrice();
 			totalItems++;
 			System.out.println("Album ID: " + album.getAlbumID());
@@ -52,27 +64,25 @@ public class Basket {
 			System.out.println("Price: $" + album.getPrice());
 			System.out.println();
 		}
-		
+
 		System.out.println("Total Item(s) in the Basket: " + totalItems);
 		System.out.println("Total Price: $" + totalPrice);
 		System.out.println();
 	}
-	
+
 	public void printDetailedBasketInfo() {
+
 		totalPrice = 0.0;
-	
-		
-		for(Album album : albums) {
+
+		for (Album album : albums) {
 			totalPrice += album.getPrice();
 			totalItems++;
 			album.printAlbumInfo();
 		}
-		
+
 		System.out.println("Total Item(s) in the Basket: " + totalItems);
 		System.out.println("Total Price: $" + totalPrice);
 		System.out.println();
 	}
-	
 
-	
 }
